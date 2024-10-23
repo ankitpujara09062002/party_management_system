@@ -1,0 +1,51 @@
+.container-list-wrapper {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.table {
+    font-size: 14px;
+    /* Adjust font size */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f5f5f5;
+    /* Add a light grey background on hover */
+}
+
+.img-list-wrapper {
+    width: 50px;
+    /* Set a consistent size for images */
+    height: auto;
+    /* Maintain aspect ratio */
+}
+
+.bank-details-wrapper {
+    max-height: 150px;
+    /* Limit height for bank details */
+    overflow-y: auto;
+    /* Allow scrolling for overflow */
+}
+
+.cursor-pointer {
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .table {
+        font-size: 12px;
+        /* Smaller font size on mobile */
+    }
+
+    .img-list-wrapper {
+        width: 40px;
+        /* Smaller images on mobile */
+    }
+}

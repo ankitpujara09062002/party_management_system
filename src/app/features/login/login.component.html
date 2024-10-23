@@ -1,0 +1,65 @@
+<section class="vh-100" style="background-color: #508bfc;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <h3 class="mb-5">Login in</h3>
+
+                        <!-- Login form section, shown when loginForm is initialized -->
+                        <div class="container login-body" *ngIf="loginForm">
+                            <form class="form-main" [formGroup]="loginForm" (ngSubmit)="submitForm($event)">
+
+                                <!-- Username input field -->
+                                <div class="form-group pb-1">
+                                    <label class="label-required" for="username">Username</label>
+                                    <span class="text-danger pl-1">*</span>
+                                    <div class="input-group with-focus">
+                                        <input type="text" id="username" formControlName="username" class="form-control"
+                                            autocomplete="off" />
+                                    </div>
+                                    <!-- Validation message for required username -->
+                                    <div *ngIf="loginForm.controls['username'].hasError('required') &&
+                                                (loginForm.controls['username'].dirty || loginForm.controls['username'].touched)"
+                                        class="text-danger">
+                                        Username is required
+                                    </div>
+                                </div>
+
+                                <!-- Password input field -->
+                                <div class="form-group password-field mt-3">
+                                    <label class="label-required" for="password">Password</label>
+                                    <span class="text-danger pl-1">*</span>
+                                    <div class="input-group with-focus">
+                                        <input type="password" id="password" formControlName="password"
+                                            class="form-control" autocomplete="off" />
+                                    </div>
+                                    <!-- Validation message for required password -->
+                                    <div *ngIf="loginForm.controls['password'].hasError('required') &&
+                                                (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)"
+                                        class="text-danger">
+                                        Password is required
+                                    </div>
+                                </div>
+
+                                <!-- Instruction message for the user -->
+                                <div class="comment-message mt-3">
+                                    <p class="text-muted">Please enter your username and password to log in.</p>
+                                </div>
+
+                                <!-- Login button, disabled if form is invalid or loading -->
+                                <div class="d-flex justify-content-center btn-group-wrapper">
+                                    <button [disabled]="!loginForm.valid || loginFormLoading"
+                                        class="btn btn-primary btn-lg btn-block">
+                                        <p class="mb-0 login-btn-text text-white">Login</p>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

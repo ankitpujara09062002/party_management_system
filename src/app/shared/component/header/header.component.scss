@@ -1,0 +1,28 @@
+/* Styles for the navbar container */
+.navbar-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin: 0 24px;
+}
+
+/* Styles for the system title */
+.system-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Adjust margins for smaller screens */
+@media screen and (max-width: 992px) {
+    .navbar-container {
+        margin: 0 4px;
+    }
+}
+
+/* Adjust font size for very small screens */
+@media screen and (max-width: 400px) {
+    .system-title {
+        font-size: 20px;
+    }
+}

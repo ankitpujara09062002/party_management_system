@@ -1,0 +1,201 @@
+<form [formGroup]="partyDetailsForm">
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="name">Name</label>
+        <input type="text" id="name" class="form-control" formControlName="name">
+        <div *ngIf="partyDetailsForm.get('name')?.invalid && partyDetailsForm.get('name')?.touched" class="text-danger">
+            Name is required.
+        </div>
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="companyName">Company Name</label>
+        <input type="text" id="companyName" class="form-control" formControlName="company_name">
+        <div *ngIf="partyDetailsForm.get('company_name')?.invalid && partyDetailsForm.get('company_name')?.touched"
+            class="text-danger">
+            Company Name is required.
+        </div>
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="mobileNo">Mobile No</label>
+        <input type="text" id="mobileNo" class="form-control" formControlName="mobile_no">
+        <div *ngIf="partyDetailsForm.get('mobile_no')?.invalid && partyDetailsForm.get('mobile_no')?.touched"
+            class="text-danger">
+            Mobile Number is required.
+        </div>
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="telephoneNo">Telephone No</label>
+        <input type="number" id="telephoneNo" class="form-control" formControlName="telephone_no">
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="whatsAppNo">WhatsApp No</label>
+        <input type="number" id="whatsAppNo" class="form-control" formControlName="whatsapp_no">
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="email">Email</label>
+        <input type="text" id="email" class="form-control" formControlName="email">
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="remark">Remark</label>
+        <input type="text" id="remark" class="form-control" formControlName="remark">
+    </div>
+
+    <div class="form-group mb-2">
+        <div class="d-flex align-items-center">
+            <label class="pb-1 me-3" for="loginAccess">Login Access</label>
+            <input class="input-checkbox-wrapper" type="checkbox" formControlName="login_access">
+        </div>
+        <div
+            *ngIf="partyDetailsForm.controls['login_access'].invalid && partyDetailsForm.controls['login_access'].touched">
+            You must choose either Yes or No
+        </div>
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="dob">DOB</label>
+        <input type="date" id="dob" class="form-control" formControlName="date_of_birth" />
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="anniversaryDate">Anniversary Date</label>
+        <input type="date" id="anniversaryDate" class="form-control" formControlName="anniversary_date">
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="gstIn">GST-In</label>
+        <input type="text" id="gstIn" class="form-control" formControlName="gstin">
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="panNo">Pan No</label>
+        <input type="text" id="panNo" class="form-control" formControlName="pan_no">
+    </div>
+
+    <div class="form-group mb-2">
+        <div class="d-flex align-items-center">
+            <label class="pb-1 me-3" for="applyTds">Apply TDS</label>
+            <input class="input-checkbox-wrapper" type="checkbox" formControlName="apply_tds">
+        </div>
+        <div *ngIf="partyDetailsForm.controls['apply_tds'].invalid && partyDetailsForm.controls['apply_tds'].touched">
+            You must choose either Yes or No
+        </div>
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="creditLimit">Credit Limit</label>
+        <input type="text" id="creditLimit" class="form-control" formControlName="credit_limit">
+        <div *ngIf="partyDetailsForm.get('credit_limit')?.invalid && partyDetailsForm.get('credit_limit')?.touched"
+            class="text-danger">
+            Credit Limit is required.
+        </div>
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="productPicture">Picture</label>
+        <div>
+            <input #Image type="file" #fileInput class="input-field-wrapper" formControlName="image"
+                (change)="handleFileInput($event)" />
+            <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="uploaded-img-wrapper me-4">
+            <button class="btn upload-file-btn-wrapper" (click)="fileInput.click()">Upload a file</button>
+        </div>
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="address">Address</label>
+        <div formArrayName="address">
+            <div *ngFor="let address of addressArray.controls; let i = index" [formGroupName]="i">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h6>Address {{ i + 1 }}</h6>
+                    <i class="fa fa-trash delete-icon-wrapper" (click)="removeAddress(i)"></i>
+                </div>
+                <div class="row m-0">
+                    <div class="col-6 ps-0">
+                        <label class="w-100" for="addressLine1">Address Line 1:</label>
+                        <input class="w-100" id="addressLine1" formControlName="address_line_1">
+                    </div>
+                    <div class="col-6 p-0">
+                        <label class="w-100" for="addressLine2">Address Line 2:</label>
+                        <input class="w-100" id="addressLine2" formControlName="address_line_2">
+                    </div>
+                </div>
+
+                <div class="row m-0">
+                    <div class="col-6 ps-0">
+                        <label class="w-100" for="city">City:</label>
+                        <input class="w-100" id="city" formControlName="city">
+                    </div>
+                    <div class="col-6 p-0">
+                        <label class="w-100" for="country">Country:</label>
+                        <input class="w-100" id="country" formControlName="country">
+                    </div>
+                </div>
+
+                <div class="row m-0">
+                    <div class="col-6 ps-0">
+                        <label class="w-100" for="pincode">Pincode:</label>
+                        <input class="w-100" id="pincode" formControlName="pincode">
+                    </div>
+                    <div class="col-6 p-0">
+                        <label class="w-100" for="state">State:</label>
+                        <input class="w-100" id="state" formControlName="state">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary mt-2" type="button" (click)="onAddAddress()">Add Address</button>
+    </div>
+
+    <div class="form-group mb-2 pb-1">
+        <label class="pb-1" for="bank">Bank Details</label>
+        <div formArrayName="bank">
+            <div *ngFor="let bankDetail of bankDetailsArray.controls; let i = index" [formGroupName]="i">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h6>Bank Detail {{ i + 1 }}</h6>
+                    <i class="fa fa-trash delete-icon-wrapper" (click)="removeBankDetails(i)"></i>
+                </div>
+
+
+                <div class="row m-0">
+                    <div class="col-6 ps-0">
+                        <label class="w-100" for="accountHolderName">Account Holder Name:</label>
+                        <input class="w-100" id="accountHolderName" formControlName="account_holder_name">
+                    </div>
+                    <div class="col-6 p-0">
+                        <label class="w-100" for="accountNo">Account No:</label>
+                        <input class="w-100" id="accountNo" formControlName="account_no">
+                    </div>
+                </div>
+
+                <div class="row m-0">
+                    <div class="col-6 ps-0">
+                        <label class="w-100" for="ifscCode">IFSC Code:</label>
+                        <input class="w-100" id="ifscCode" formControlName="bank_ifsc_code">
+                    </div>
+                    <div class="col-6 p-0">
+                        <label class="w-100" for="bankName">Bank Name:</label>
+                        <input class="w-100" id="bankName" formControlName="bank_name">
+                    </div>
+                </div>
+
+                <div class="row m-0">
+                    <div class="col-6 ps-0">
+                        <label class="w-100" for="branchName">Branch Name:</label>
+                        <input class="w-100" id="branchName" formControlName="branch_name">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary mt-3" type=" button" (click)="onAddBankDetails()">Add Bank Detail</button>
+    </div>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary" (click)="saveProduct()">{{isEditModalOpen ? 'Update' :
+            'Save'}}</button>
+        <button type="button" class="btn btn-secondary ms-3" data-bs-dismiss="modal">Close</button>
+    </div>
+
+</form>

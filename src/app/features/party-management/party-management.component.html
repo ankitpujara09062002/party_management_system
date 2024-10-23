@@ -1,0 +1,106 @@
+<app-header *ngIf="isUserLoggedIn"></app-header>
+
+
+<!-- Wrapper for the table containing party details -->
+<div class="container-list-wrapper">
+    <!-- Button to trigger the modal for adding a product -->
+    <button type="button" class="btn btn-primary my-4" data-bs-toggle="modal" (click)="openModal()"
+        data-bs-target="#staticBackdrop">
+        Add Party
+    </button>
+    <div class="table-wrapper">
+        <table class="table table-bordered table-responsive table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Company Name</th>
+                    <th>Mobile No</th>
+                    <th>Images</th>
+                    <th>Email</th>
+                    <th>GST-In</th>
+                    <th>Pan No</th>
+                    <th>Bank Details</th>
+                    <th>Address</th>
+                    <th>Credit Limit</th>
+                    <th>DOB</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let partyData of partyListData">
+                    <td>{{ partyData?.name }}</td>
+                    <td>{{ partyData?.company_name }}</td>
+                    <td>{{ partyData?.mobile_no }}</td>
+                    <td>
+                        <img *ngIf="partyData?.image; else placeholder" [src]="apiEndPoint + partyData?.image"
+                            alt="{{ partyData?.name }}" class="img-thumbnail img-list-wrapper">
+                        <ng-template #placeholder>
+                            <img src="../../assets/images/placeholder_img.jpeg" alt="placeholder_img"
+                                class="img-thumbnail img-list-wrapper">
+                        </ng-template>
+                    </td>
+                    <td>{{ partyData?.email }}</td>
+                    <td>{{ partyData?.gstin }}</td>
+                    <td>{{ partyData?.pan_no }}</td>
+                    <td *ngIf="!partyData?.bank_id?.length">
+                        <span class="text-muted">NO Bank Details Found</span>
+                    </td>
+                    <td *ngIf="partyData?.bank_id?.length" class="bank-details-wrapper">
+                        <ng-container *ngFor="let bankId of partyData.bank_id">
+                            <p class="m-0">Acc. Holder No: {{ bankId?.account_holder_name }}</p>
+                            <p class="m-0">Acc No: {{ bankId?.account_no }}</p>
+                            <p class="m-0">Bank Name: {{ bankId?.bank_name }}</p>
+                            <p class="m-0">Branch Name: {{ bankId?.branch_name }}</p>
+                            <p class="m-0">IFSC code: {{ bankId?.bank_ifsc_code }}</p>
+                            <br />
+                        </ng-container>
+                    </td>
+                    <td *ngIf="!partyData?.address?.length">
+                        <span class="text-muted">NO Data Found</span>
+                    </td>
+                    <td *ngIf="partyData?.address?.length" class="bank-details-wrapper">
+                        <ng-container *ngFor="let address of partyData.address">
+                            <p class="m-0">Address Line 1: {{ address?.address_line_1 }}</p>
+                            <p class="m-0">Address Line 2: {{ address?.address_line_2 }}</p>
+                            <p class="m-0">City: {{ address?.city }}</p>
+                            <p class="m-0">Country: {{ address?.country }}</p>
+                            <p class="m-0">Pincode: {{ address?.pincode }}</p>
+                            <p class="m-0">State: {{ address?.state }}</p>
+                            <br />
+                        </ng-container>
+                    </td>
+                    <td>{{ partyData?.credit_limit }}</td>
+                    <td>{{ partyData?.date_of_birth | date: 'dd-MM-yyyy' }}</td>
+                    <td class="d-flex align-items-center">
+                        <!-- Edit button to open the modal -->
+                        <button type="button" class="btn p-0 me-2" data-bs-toggle="modal" (click)="openModal(partyData)"
+                            data-bs-target="#staticBackdrop">
+                            <img src="../../assets/images/edit_img.png" alt="edit-icon" />
+                        </button>
+                        <!-- Delete button to trigger deletion -->
+                        <img src="../../assets/images/delete_img.png" (click)="openDeleteParty(partyData?.id)"
+                            alt="delete-icon" class="cursor-pointer" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal for adding or editing party details -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">{{isEditModalShown ? 'Edit' : 'Add'}} Party
+                    Data</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-party-management-dailog [isEditModalOpen]="isEditModalShown" [partyDetailsData]="editPartyDetails"
+                    (onModalClose)="onModalClose($event)">
+                </app-party-management-dailog>
+            </div>
+        </div>
+    </div>
+</div>
